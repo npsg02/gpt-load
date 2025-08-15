@@ -4,12 +4,12 @@ import type { DashboardStatsResponse } from "@/types/models";
 import { NCard, NGrid, NGridItem, NSpace, NTag, NTooltip } from "naive-ui";
 import { onMounted, ref } from "vue";
 
-// 统计数据
+// Statistics data
 const stats = ref<DashboardStatsResponse | null>(null);
 const loading = ref(true);
 const animatedValues = ref<Record<string, number>>({});
 
-// 格式化数值显示
+// Format numeric display
 const formatValue = (value: number, type: "count" | "rate" = "count"): string => {
   if (type === "rate") {
     return `${value.toFixed(1)}%`;
@@ -20,20 +20,20 @@ const formatValue = (value: number, type: "count" | "rate" = "count"): string =>
   return value.toString();
 };
 
-// 格式化趋势显示
+// Format trend display
 const formatTrend = (trend: number): string => {
   const sign = trend >= 0 ? "+" : "";
   return `${sign}${trend.toFixed(1)}%`;
 };
 
-// 获取统计数据
+// Get statistics data
 const fetchStats = async () => {
   try {
     loading.value = true;
     const response = await getDashboardStats();
     stats.value = response.data;
 
-    // 添加动画效果
+    // Add animation effect
     setTimeout(() => {
       animatedValues.value = {
         key_count:
@@ -45,7 +45,7 @@ const fetchStats = async () => {
       };
     }, 0);
   } catch (error) {
-    console.error("获取统计数据失败:", error);
+    console.error("Failed to get statistics data:", error);
   } finally {
     loading.value = false;
   }
@@ -60,7 +60,7 @@ onMounted(() => {
   <div class="stats-container">
     <n-space vertical size="medium">
       <n-grid cols="2 s:4" :x-gap="20" :y-gap="20" responsive="screen">
-        <!-- 密钥数量 -->
+        <!-- Key count -->
         <n-grid-item span="1">
           <n-card :bordered="false" class="stat-card" style="animation-delay: 0s">
             <div class="stat-header">
@@ -79,7 +79,7 @@ onMounted(() => {
               <div class="stat-value">
                 {{ stats?.key_count?.value ?? 0 }}
               </div>
-              <div class="stat-title">密钥数量</div>
+              <div class="stat-title">Key Count</div>
             </div>
 
             <div class="stat-bar">
@@ -93,7 +93,7 @@ onMounted(() => {
           </n-card>
         </n-grid-item>
 
-        <!-- RPM (10分钟) -->
+        <!-- RPM (10 minutes) -->
         <n-grid-item span="1">
           <n-card :bordered="false" class="stat-card" style="animation-delay: 0.05s">
             <div class="stat-header">
@@ -112,7 +112,7 @@ onMounted(() => {
               <div class="stat-value">
                 {{ stats?.rpm?.value.toFixed(1) ?? 0 }}
               </div>
-              <div class="stat-title">10分钟RPM</div>
+              <div class="stat-title">10-min RPM</div>
             </div>
 
             <div class="stat-bar">
@@ -126,7 +126,7 @@ onMounted(() => {
           </n-card>
         </n-grid-item>
 
-        <!-- 24小时请求 -->
+        <!-- 24-hour requests -->
         <n-grid-item span="1">
           <n-card :bordered="false" class="stat-card" style="animation-delay: 0.1s">
             <div class="stat-header">
@@ -145,7 +145,7 @@ onMounted(() => {
               <div class="stat-value">
                 {{ stats ? formatValue(stats.request_count.value) : "--" }}
               </div>
-              <div class="stat-title">24小时请求</div>
+              <div class="stat-title">24h Requests</div>
             </div>
 
             <div class="stat-bar">
@@ -159,7 +159,7 @@ onMounted(() => {
           </n-card>
         </n-grid-item>
 
-        <!-- 24小时错误率 -->
+        <!-- 24-hour error rate -->
         <n-grid-item span="1">
           <n-card :bordered="false" class="stat-card" style="animation-delay: 0.15s">
             <div class="stat-header">
@@ -178,7 +178,7 @@ onMounted(() => {
               <div class="stat-value">
                 {{ stats ? formatValue(stats.error_rate.value ?? 0, "rate") : "--" }}
               </div>
-              <div class="stat-title">24小时错误率</div>
+              <div class="stat-title">24h Error Rate</div>
             </div>
 
             <div class="stat-bar">
@@ -337,7 +337,7 @@ onMounted(() => {
   }
 }
 
-/* 响应式网格 */
+/* Responsive grid */
 :deep(.n-grid-item) {
   min-width: 0;
 }
