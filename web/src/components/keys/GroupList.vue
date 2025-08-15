@@ -27,7 +27,7 @@ const emit = defineEmits<Emits>();
 const searchText = ref("");
 const showGroupModal = ref(false);
 
-// 过滤后的分组列表
+// Filtered group list
 const filteredGroups = computed(() => {
   if (!searchText.value) {
     return props.groups;
@@ -44,7 +44,7 @@ function handleGroupClick(group: Group) {
   emit("group-select", group);
 }
 
-// 获取渠道类型的标签颜色
+// Get channel type tag color
 function getChannelTagType(channelType: string) {
   switch (channelType) {
     case "openai":
@@ -74,20 +74,20 @@ function handleGroupCreated(group: Group) {
 <template>
   <div class="group-list-container">
     <n-card class="group-list-card modern-card" :bordered="false" size="small">
-      <!-- 搜索框 -->
+      <!-- Search box -->
       <div class="search-section">
-        <n-input v-model:value="searchText" placeholder="搜索分组名称..." size="small" clearable>
+        <n-input v-model:value="searchText" placeholder="Search group names..." size="small" clearable>
           <template #prefix>
             <n-icon :component="Search" />
           </template>
         </n-input>
       </div>
 
-      <!-- 分组列表 -->
+      <!-- Group list -->
       <div class="groups-section">
         <n-spin :show="loading" size="small">
           <div v-if="filteredGroups.length === 0 && !loading" class="empty-container">
-            <n-empty size="small" :description="searchText ? '未找到匹配的分组' : '暂无分组'" />
+            <n-empty size="small" :description="searchText ? 'No matching groups found' : 'No groups'" />
           </div>
           <div v-else class="groups-list">
             <div
@@ -117,13 +117,13 @@ function handleGroupCreated(group: Group) {
         </n-spin>
       </div>
 
-      <!-- 添加分组按钮 -->
+      <!-- Add group button -->
       <div class="add-section">
         <n-button type="primary" size="small" block @click="openCreateGroupModal">
           <template #icon>
             <n-icon :component="Add" />
           </template>
-          创建分组
+          Create Group
         </n-button>
       </div>
     </n-card>
