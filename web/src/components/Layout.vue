@@ -67,7 +67,7 @@ const toggleMenu = () => {
     <app-footer />
   </n-layout>
 
-  <!-- 全局任务进度条 -->
+  <!-- Global task progress bar -->
   <global-task-progress-bar />
 </template>
 
