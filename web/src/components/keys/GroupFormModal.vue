@@ -453,7 +453,7 @@ async function handleSubmit() {
   <n-modal :show="show" @update:show="handleClose" class="group-form-modal">
     <n-card
       class="group-form-card"
-      :title="group ? '编辑分组' : '创建分组'"
+      :title="group ? 'Edit Group' : 'Create Group'"
       :bordered="false"
       size="huge"
       role="dialog"
@@ -478,19 +478,19 @@ async function handleSubmit() {
       >
         <!-- 基础信息 -->
         <div class="form-section">
-          <h4 class="section-title">基础信息</h4>
+          <h4 class="section-title">Basic Information</h4>
 
-          <!-- 分组名称和显示名称在同一行 -->
+          <!-- Group name and display name on same row -->
           <div class="form-row">
-            <n-form-item label="分组名称" path="name" class="form-item-half">
+            <n-form-item label="Group Name" path="name" class="form-item-half">
               <template #label>
                 <div class="form-label-with-tooltip">
-                  分组名称
+                  Group Name
                   <n-tooltip trigger="hover" placement="top">
                     <template #trigger>
                       <n-icon :component="HelpCircleOutline" class="help-icon" />
                     </template>
-                    作为API路由的一部分，只能包含小写字母、数字、中划线或下划线，长度3-30位。例如：gemini、openai-2
+                    Part of API route, can only contain lowercase letters, numbers, hyphens or underscores, 3-30 characters. For example: gemini, openai-2
                   </n-tooltip>
                 </div>
               </template>
