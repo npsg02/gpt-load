@@ -15,7 +15,7 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  placeholder: "多个密钥请用英文逗号 , 分隔",
+  placeholder: "Multiple keys separated by commas",
   size: "small",
 });
 
@@ -23,12 +23,12 @@ const emit = defineEmits<Emits>();
 
 const message = useMessage();
 
-// 密钥生成弹窗相关
+// Key generator modal related
 const showKeyGeneratorModal = ref(false);
 const keyCount = ref(1);
 const isGenerating = ref(false);
 
-// 生成随机字符串
+// Generate random string
 function generateRandomString(length: number): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
   let result = "";
@@ -38,7 +38,7 @@ function generateRandomString(length: number): string {
   return result;
 }
 
-// 生成密钥
+// Generate keys
 function generateKeys(): string[] {
   const keys: string[] = [];
   for (let i = 0; i < keyCount.value; i++) {
@@ -47,13 +47,13 @@ function generateKeys(): string[] {
   return keys;
 }
 
-// 打开密钥生成器弹窗
+// Open key generator modal
 function openKeyGenerator() {
   showKeyGeneratorModal.value = true;
   keyCount.value = 1;
 }
 
-// 确认生成密钥
+// Confirm generate keys
 function confirmGenerateKeys() {
   if (isGenerating.value) {
     return;
@@ -66,12 +66,12 @@ function confirmGenerateKeys() {
 
     let updatedValue = currentValue.trim();
 
-    // 处理逗号兼容情况
+    // Handle comma compatibility
     if (updatedValue && !updatedValue.endsWith(",")) {
       updatedValue += ",";
     }
 
-    // 添加新生成的密钥
+    // Add newly generated keys
     if (updatedValue) {
       updatedValue += newKeys.join(",");
     } else {
@@ -81,21 +81,21 @@ function confirmGenerateKeys() {
     emit("update:modelValue", updatedValue);
     showKeyGeneratorModal.value = false;
 
-    message.success(`成功生成 ${keyCount.value} 个密钥`);
+    message.success(`Successfully generated ${keyCount.value} keys`);
   } finally {
     isGenerating.value = false;
   }
 }
 
-// 复制代理密钥
+// Copy proxy keys
 async function copyProxyKeys() {
   const proxyKeys = props.modelValue || "";
   if (!proxyKeys.trim()) {
-    message.warning("暂无密钥可复制");
+    message.warning("No keys to copy");
     return;
   }
 
-  // 将逗号分隔的密钥转换为换行分隔
+  // Convert comma-separated keys to line-separated
   const formattedKeys = proxyKeys
     .split(",")
     .map(key => key.trim())
@@ -104,13 +104,13 @@ async function copyProxyKeys() {
 
   const success = await copy(formattedKeys);
   if (success) {
-    message.success("密钥已复制到剪贴板");
+    message.success("Keys copied to clipboard");
   } else {
-    message.error("复制失败，请手动复制");
+    message.error("Copy failed, please copy manually");
   }
 }
 
-// 处理输入框值变化
+// Handle input value change
 function handleInput(value: string) {
   emit("update:modelValue", value);
 }
@@ -131,44 +131,44 @@ function handleInput(value: string) {
             <template #icon>
               <n-icon :component="Key" />
             </template>
-            生成
+            Generate
           </n-button>
           <n-button text type="tertiary" :size="size" @click="copyProxyKeys" style="opacity: 0.7">
             <template #icon>
               <n-icon :component="Copy" />
             </template>
-            复制
+            Copy
           </n-button>
         </n-space>
       </template>
     </n-input>
 
-    <!-- 密钥生成器弹窗 -->
+    <!-- Key generator modal -->
     <n-modal
       v-model:show="showKeyGeneratorModal"
       preset="dialog"
-      title="生成代理密钥"
-      positive-text="确认生成"
-      negative-text="取消"
+      title="Generate Proxy Keys"
+      positive-text="Confirm Generation"
+      negative-text="Cancel"
       :positive-button-props="{ loading: isGenerating }"
       @positive-click="confirmGenerateKeys"
     >
       <n-space vertical :size="16">
         <div>
           <p style="margin: 0 0 8px 0; color: #666; font-size: 14px">
-            请输入要生成的密钥数量（最大100个）：
+            Please enter the number of keys to generate (max 100):
           </p>
           <n-input-number
             v-model:value="keyCount"
             :min="1"
             :max="100"
-            placeholder="请输入数量"
+            placeholder="Enter quantity"
             style="width: 100%"
             :disabled="isGenerating"
           />
         </div>
         <div style="color: #999; font-size: 12px; line-height: 1.4">
-          <p>生成的密钥将会插入到当前输入框内容的后面，以逗号分隔</p>
+          <p>Generated keys will be appended to the current input content, separated by commas</p>
         </div>
       </n-space>
     </n-modal>
