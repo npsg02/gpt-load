@@ -1,4 +1,4 @@
-// 通用 API 响应结构
+// Common API response structure
 export interface ApiResponse<T> {
   code: number;
   message: string;

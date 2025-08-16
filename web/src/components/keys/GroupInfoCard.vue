@@ -193,7 +193,7 @@ async function handleDelete() {
             ]),
             h(NInput, {
               value: confirmInput.value,
-              "onUpdate:value": (v) => {
+              "onUpdate:value": v => {
                 confirmInput.value = v;
               },
               placeholder: "请输入分组名称",

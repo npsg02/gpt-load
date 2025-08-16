@@ -33,7 +33,7 @@ async function fetchSettings() {
     settingList.value = data || [];
     initForm();
   } catch (_error) {
-    message.error("获取设置失败");
+    message.error("Failed to get settings");
   }
 }
 
@@ -66,7 +66,7 @@ function generateValidationRules(item: Setting): FormItemRule[] {
   if (item.required) {
     const rule: FormItemRule = {
       required: true,
-      message: `请输入 ${item.name}`,
+      message: `Please enter ${item.name}`,
       trigger: ["input", "blur"],
     };
     if (item.type === "int") {
@@ -81,7 +81,7 @@ function generateValidationRules(item: Setting): FormItemRule[] {
           return true;
         }
         if (item.min_value !== undefined && item.min_value !== null && value < item.min_value) {
-          return new Error(`值不能小于 ${item.min_value}`);
+          return new Error(`Value cannot be less than ${item.min_value}`);
         }
         return true;
       },
@@ -133,7 +133,7 @@ function generateValidationRules(item: Setting): FormItemRule[] {
                   :min="
                     item.min_value !== undefined && item.min_value >= 0 ? item.min_value : undefined
                   "
-                  placeholder="请输入数值"
+                  placeholder="Enter numeric value"
                   clearable
                   style="width: 100%"
                   size="small"
@@ -141,13 +141,13 @@ function generateValidationRules(item: Setting): FormItemRule[] {
                 <proxy-keys-input
                   v-else-if="item.key === 'proxy_keys'"
                   v-model="form[item.key] as string"
-                  placeholder="请输入内容"
+                  placeholder="Enter content"
                   size="small"
                 />
                 <n-input
                   v-else
                   v-model:value="form[item.key] as string"
-                  placeholder="请输入内容"
+                  placeholder="Enter content"
                   clearable
                   size="small"
                 />
@@ -173,7 +173,7 @@ function generateValidationRules(item: Setting): FormItemRule[] {
         <template #icon>
           <n-icon :component="Save" />
         </template>
-        {{ isSaving ? "保存中..." : "保存设置" }}
+        {{ isSaving ? "Saving..." : "Save Settings" }}
       </n-button>
     </div>
   </n-space>

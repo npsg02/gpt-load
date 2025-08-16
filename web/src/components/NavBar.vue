@@ -14,10 +14,10 @@ const emit = defineEmits(["close"]);
 
 const menuOptions = computed<MenuOption[]>(() => {
   const options: MenuOption[] = [
-    renderMenuItem("dashboard", "仪表盘", "📊"),
-    renderMenuItem("keys", "密钥管理", "🔑"),
-    renderMenuItem("logs", "日志", "📋"),
-    renderMenuItem("settings", "系统设置", "⚙️"),
+    renderMenuItem("dashboard", "Dashboard", "📊"),
+    renderMenuItem("keys", "Key Management", "🔑"),
+    renderMenuItem("logs", "Logs", "📋"),
+    renderMenuItem("settings", "Settings", "⚙️"),
   ];
 
   return options;
